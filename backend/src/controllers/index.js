@@ -6,3 +6,4 @@ module.exports.gameState = require('./gameState.controller');
 module.exports.npc = require('./npc.controller');
 module.exports.npcState = require('./npcState.controller');
 module.exports.task = require('./task.controller');
+module.exports.taskState = require('./taskState.controller');
