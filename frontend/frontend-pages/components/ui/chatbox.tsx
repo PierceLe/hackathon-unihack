@@ -1,4 +1,4 @@
-import Avatar from "./avatar"
+import Avatar from "./avatar1"
 
 type ChatMessageProps = {
   sender: string
