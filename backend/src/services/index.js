@@ -10,3 +10,4 @@ module.exports.npcStateService = require('./npcState.service');
 module.exports.taskService = require('./task.service');
 module.exports.taskStateService = require('./taskState.service');
 module.exports.traitService = require('./trait.service');
+module.exports.chatLogService = require('./chatLog.service');

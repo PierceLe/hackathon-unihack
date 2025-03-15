@@ -8,3 +8,4 @@ module.exports.NPCState = require('./npcState.model');
 module.exports.TaskState = require('./taskState.model');
 module.exports.CrisisState = require('./crisisState.model');
 module.exports.GameState = require('./gameState.model');
+module.exports.ChatLog = require('./chatLog.model');

@@ -8,7 +8,8 @@ const npcRoute = require('./npc.route');
 const npcStateRoute = require('./npcState.route');
 const taskRoute = require('./task.route');
 const taskStateRoute = require('./taskState.route');
-const traitRoute = require('./trait.route'); // Thêm Trait route
+const traitRoute = require('./trait.route');
+const chatLogRoute = require('./chatLog.route'); // Thêm ChatLog route
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -52,8 +53,12 @@ const defaultRoutes = [
     route: taskStateRoute,
   },
   {
-    path: '/traits', // Thêm route cho Trait
+    path: '/traits',
     route: traitRoute,
+  },
+  {
+    path: '/chat-logs', // Thêm route cho ChatLog
+    route: chatLogRoute,
   },
 ];
 

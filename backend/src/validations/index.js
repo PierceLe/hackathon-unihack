@@ -8,3 +8,4 @@ module.exports.npcStateValidation = require('./npcState.validation');
 module.exports.taskValidation = require('./task.validation');
 module.exports.taskStateValidation = require('./taskState.validation');
 module.exports.traitValidation = require('./trait.validation');
+module.exports.chatLogValidation = require('./chatLog.validation');
