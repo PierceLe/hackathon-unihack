@@ -2,15 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Send, Trash2 } from "lucide-react";
-import ChatMessage from "@/components/ui/chatbox";
-import PinkButton from "@/components/ui/setting";
 import { useSearchParams } from "next/navigation";
 import { teamMembers } from "@/data/team-member";
 import { SelectedMember } from "@/types";
 import { API_BASE_URL, AI_API_URL, getAccessToken } from "@/lib/constants";
 import { toast } from "react-hot-toast";
-import { useState, useRef, useEffect } from "react"
-import { Send, Settings } from "lucide-react"
 import ChatMessage from "@/components/ui/chatbox"
 import PinkButton from "@/components/ui/setting"
 import { Button } from "@/components/ui/mainButton"
