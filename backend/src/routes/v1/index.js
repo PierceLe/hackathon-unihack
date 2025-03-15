@@ -4,7 +4,8 @@ const userRoute = require('./user.route');
 const crisisRoute = require('./crisis.route');
 const crisisStateRoute = require('./crisisState.route');
 const gameStateRoute = require('./gameState.route');
-const npcRoute = require('./npc.route'); // Thêm NPC route
+const npcRoute = require('./npc.route');
+const npcStateRoute = require('./npcState.route'); // Thêm NPCState route
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -32,8 +33,12 @@ const defaultRoutes = [
     route: gameStateRoute,
   },
   {
-    path: '/npcs', // Thêm route cho NPC
+    path: '/npcs',
     route: npcRoute,
+  },
+  {
+    path: '/npc-states', // Thêm route cho NPCState
+    route: npcStateRoute,
   },
 ];
 
