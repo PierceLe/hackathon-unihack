@@ -6,3 +6,4 @@ module.exports.gameStateValidation = require('./gameState.validation');
 module.exports.npcValidation = require('./npc.validation');
 module.exports.npcStateValidation = require('./npcState.validation');
 module.exports.taskValidation = require('./task.validation');
+module.exports.taskStateValidation = require('./taskState.validation');
