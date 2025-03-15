@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
 
 const gameStateSchema = mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -11,6 +12,9 @@ const gameStateSchema = mongoose.Schema({
   turn_before_next_stage: { type: Number, required: true },
   time_stamp: { type: Date, default: Date.now },
 });
+
+gameStateSchema.plugin(toJSON);
+gameStateSchema.plugin(paginate);
 
 const GameState = mongoose.model('GameState', gameStateSchema);
 module.exports = GameState;
