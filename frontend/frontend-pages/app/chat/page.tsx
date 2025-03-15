@@ -7,7 +7,7 @@ import PinkButton from "@/components/ui/setting";
 import { useSearchParams } from "next/navigation";
 import { teamMembers } from "@/data/team-member";
 import { SelectedMember } from "@/types";
-import { API_BASE_URL, AI_API_URL } from "@/lib/constants";
+import { API_BASE_URL, AI_API_URL, getAccessToken } from "@/lib/constants";
 import { toast } from "react-hot-toast";
 
 type Message = {
@@ -17,14 +17,6 @@ type Message = {
   isUser: boolean;
   avatar: string;
   isTyping?: boolean; // Thêm thuộc tính để theo dõi trạng thái gõ
-};
-
-const getAccessToken = (): string | null => {
-  const cookies = document.cookie.split(";");
-  const tokenCookie = cookies.find((cookie) =>
-    cookie.trim().startsWith("accessToken=")
-  );
-  return tokenCookie ? tokenCookie.split("=")[1] : null;
 };
 
 async function saveChatLogs(
