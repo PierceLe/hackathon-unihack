@@ -39,7 +39,7 @@ export default function TeamSelector() {
 
   const handleLockIn = () => {
     if (selectedMembers.length === 5) {
-      router.push("/chat")
+      router.push("/text-page/idea")
     }
   }
   const handleBack = () => {

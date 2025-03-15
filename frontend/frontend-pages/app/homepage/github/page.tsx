@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   AlertCircle,
   Code,
@@ -15,27 +15,31 @@ import {
   Play,
   Shield,
   Star,
-} from "lucide-react"
+} from "lucide-react";
 
-import RepoPage from "@/components/repo/repo-page"
+import RepoPage from "@/components/repo/repo-page";
 
 interface RepoPageProps {
   params: {
-    name: string
-  }
+    name: string;
+  };
 }
 
 export default function Page({ params }: RepoPageProps) {
-  return <RepoPage repoName={params.name} />
+  return <RepoPage repoName={params.name} />;
 }
 
 function RepoPageContent({ repoName }: { repoName: string }) {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="border-b bg-background pb-8">
-        <div className="container flex items-center h-16 px-4">{/* Header content from home page would go here */}</div>
+      <header className="border-b bg-background pb-8 relative">
+        
       </header>
+
+      
+
       <div className="flex flex-col min-h-screen pt-2">
+        
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,14 +54,19 @@ function RepoPageContent({ repoName }: { repoName: string }) {
             <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
             <path d="M9 18c-4.51 2-5-2-7-2" />
           </svg>
-          <Link href="/" className="hover:underline">
-            username
+          <Link href="./homepage" className="hover:underline">
+            Back to homepage
           </Link>
           <span>/</span>
-          <Link href={`/repo/${repoName}`} className="font-semibold hover:underline">
+          <Link
+            href={`/repo/${repoName}`}
+            className="font-semibold hover:underline"
+          >
             {repoName}
           </Link>
-          <span className="ml-2 px-1.5 py-0.5 rounded-full text-xs bg-muted">Public</span>
+          <span className="ml-2 px-1.5 py-0.5 rounded-full text-xs bg-muted">
+            Public
+          </span>
         </div>
 
         <div className="flex flex-col md:flex-row md:items-center gap-4">
@@ -75,24 +84,11 @@ function RepoPageContent({ repoName }: { repoName: string }) {
               Tags
             </Button>
           </div>
-          <div className="flex items-center gap-2 md:ml-auto">
-            <Button variant="outline" size="sm">
-              <GitFork className="h-4 w-4 mr-1" />
-              Fork
-              <span className="ml-1 text-xs text-muted-foreground">12</span>
-            </Button>
-            <Button variant="outline" size="sm">
-              <Star className="h-4 w-4 mr-1" />
-              Star
-              <span className="ml-1 text-xs text-muted-foreground">78</span>
-            </Button>
-            <Button variant="outline" size="sm">
-              <Eye className="h-4 w-4 mr-1" />
-              Watch
-              <span className="ml-1 text-xs text-muted-foreground">5</span>
-            </Button>
-          </div>
+
+
         </div>
+
+        
 
         <Tabs defaultValue="code">
           <TabsList className="border-b w-full justify-start rounded-none bg-transparent p-0 h-auto">
@@ -109,7 +105,9 @@ function RepoPageContent({ repoName }: { repoName: string }) {
             >
               <AlertCircle className="h-4 w-4 mr-2" />
               Issues
-              <span className="ml-1 rounded-full bg-muted px-1.5 text-xs">5</span>
+              <span className="ml-1 rounded-full bg-muted px-1.5 text-xs">
+                5
+              </span>
             </TabsTrigger>
             <TabsTrigger
               value="pull-requests"
@@ -117,7 +115,9 @@ function RepoPageContent({ repoName }: { repoName: string }) {
             >
               <GitPullRequest className="h-4 w-4 mr-2" />
               Pull requests
-              <span className="ml-1 rounded-full bg-muted px-1.5 text-xs">2</span>
+              <span className="ml-1 rounded-full bg-muted px-1.5 text-xs">
+                2
+              </span>
             </TabsTrigger>
             <TabsTrigger
               value="actions"
@@ -144,7 +144,10 @@ function RepoPageContent({ repoName }: { repoName: string }) {
                   </Button>
                   <span className="text-sm text-muted-foreground">
                     <GitCommit className="h-3 w-3 inline mr-1" />
-                    <Link href={`/repo/${repoName}/commit/abc123`} className="hover:underline">
+                    <Link
+                      href={`/repo/${repoName}/commit/abc123`}
+                      className="hover:underline"
+                    >
                       abc123
                     </Link>{" "}
                     · Last commit 3 days ago
@@ -166,9 +169,15 @@ function RepoPageContent({ repoName }: { repoName: string }) {
               </div>
               <div className="divide-y">
                 {files.map((file) => (
-                  <div key={file.name} className="flex items-center p-3 hover:bg-muted/50">
+                  <div
+                    key={file.name}
+                    className="flex items-center p-3 hover:bg-muted/50"
+                  >
                     <div className="flex-1">
-                      <Link href={`/repo/${repoName}/blob/main/${file.name}`} className="text-blue-600 hover:underline">
+                      <Link
+                        href={`/repo/${repoName}/blob/main/${file.name}`}
+                        className="text-blue-600 hover:underline"
+                      >
                         {file.icon}
                         {file.name}
                       </Link>
@@ -179,7 +188,9 @@ function RepoPageContent({ repoName }: { repoName: string }) {
                     >
                       {file.commitMessage}
                     </Link>
-                    <span className="text-xs text-muted-foreground ml-4 w-24 text-right">{file.updatedAt}</span>
+                    <span className="text-xs text-muted-foreground ml-4 w-24 text-right">
+                      {file.updatedAt}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -196,7 +207,11 @@ function RepoPageContent({ repoName }: { repoName: string }) {
                   <div key={pr.id} className="p-4">
                     <div className="flex items-start">
                       <GitPullRequest
-                        className={`h-5 w-5 mr-3 mt-1 ${pr.state === "open" ? "text-green-500" : "text-purple-500"}`}
+                        className={`h-5 w-5 mr-3 mt-1 ${
+                          pr.state === "open"
+                            ? "text-green-500"
+                            : "text-purple-500"
+                        }`}
                       />
                       <div className="flex-1">
                         <div className="flex items-baseline">
@@ -206,10 +221,13 @@ function RepoPageContent({ repoName }: { repoName: string }) {
                           >
                             {pr.title}
                           </Link>
-                          <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-muted">#{pr.id}</span>
+                          <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-muted">
+                            #{pr.id}
+                          </span>
                         </div>
                         <div className="text-sm text-muted-foreground mt-1">
-                          {pr.state === "open" ? "Opened" : "Merged"} {pr.createdAt} by {pr.author}
+                          {pr.state === "open" ? "Opened" : "Merged"}{" "}
+                          {pr.createdAt} by {pr.author}
                         </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
@@ -242,7 +260,7 @@ function RepoPageContent({ repoName }: { repoName: string }) {
         </Tabs>
       </div>
     </div>
-  )
+  );
 }
 
 const files = [
@@ -300,7 +318,7 @@ const files = [
     lastCommit: "jkl012",
     updatedAt: "3 weeks ago",
   },
-]
+];
 
 const pullRequests = [
   {
@@ -321,5 +339,4 @@ const pullRequests = [
     commits: 2,
     comments: 3,
   },
-]
-
+];

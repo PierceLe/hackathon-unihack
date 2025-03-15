@@ -1,9 +1,10 @@
 import React, { JSX } from "react";
 import Box from "@/components/ui/textfield"; // Adjust the import path for your Box component
-import { Background } from "@/components/ui/background"; // Import Background component
+import { Background } from "@/components/backgroundkb"; // Import Background component
+import { Button } from "@/components/ui/mainButton";
 
 export default function Page(): JSX.Element {
-  const textContent = "This is dynamic text passed from the page.";
+  const textContent = "You have two project options: a TODO LIST APP and a STUDENT MANAGEMENT APP. Your goal is to convince your teammate to choose one based on their responses in the chat. Pay attention to their preferences and adapt your argument to guide them toward the best choice.";
 
   return (
     <div className="relative min-h-screen">
@@ -11,8 +12,13 @@ export default function Page(): JSX.Element {
       <Background imagePath="/bg.jpg" />
 
       {/* Box component on top of the background, with proper centering */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen">
         <Box text={textContent} />
+        <Button className="mt-8" navigateTo="/chat">
+          <div className="text-secondary text-[40px]">
+            Let's chat!
+          </div>
+        </Button>
       </div>
     </div>
   );

@@ -30,13 +30,7 @@ export default function Home() {
             </div>
             </Button>
           </div>
-          <div className="pb-8">
-            <Button size="lg">
-            <div className="text-primary">
-              CONTINUE
-            </div>
-            </Button>
-          </div>
+          
           <div>
             <Button size="lg">
             <div className="text-primary">

@@ -6,6 +6,7 @@ import ChatMessage from "@/components/ui/chatbox"
 import PinkButton from "@/components/ui/setting"
 import { Button } from "@/components/ui/mainButton"
 
+
 // Define message type
 type Message = {
   id: string
@@ -89,14 +90,19 @@ export default function ChatPage() {
         {/* Centered title */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-full">
           <h1 className="text-4xl font-anton font-bold text-secondary tracking-wider">
-            FINDING THE IDEA
+            CHATBOX
           </h1>
           
         </div>
 
-        <Button className="absolute top-1/2 right-4 transform -translate-y-1/2" navigateTo="/text-page/vote">
-          <div className="text-secondary text-[40px]">Let's vote!</div>
-        </Button>
+        {/* Right button */}
+        <div className="z-10 ml-auto">
+          <Button navigateTo="/homepage">
+            <p className="text-secondary text-[36px]">
+                Back
+            </p>
+          </Button>
+        </div>
 
       </header>
 
