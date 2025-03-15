@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
 
 const taskSchema = mongoose.Schema({
   name: { type: String, required: true },
@@ -8,6 +9,9 @@ const taskSchema = mongoose.Schema({
   tsp: { type: Number, required: true },
   path: { type: String, required: true },
 });
+
+taskSchema.plugin(toJSON);
+taskSchema.plugin(paginate);
 
 const Task = mongoose.model('Task', taskSchema);
 module.exports = Task;
