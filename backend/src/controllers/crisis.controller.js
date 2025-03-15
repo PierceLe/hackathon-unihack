@@ -10,7 +10,7 @@ const createCrisis = catchAsync(async (req, res) => {
 });
 
 const getCrises = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name']);
+  const filter = pick(req.query, ['name', 'role_needed']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await crisisService.queryCrises(filter, options);
   res.send(result);

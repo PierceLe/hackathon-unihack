@@ -3,7 +3,7 @@ const { GameState } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
- * Create a game state
+ * Tạo một GameState mới
  * @param {Object} gameStateBody
  * @returns {Promise<GameState>}
  */
@@ -12,9 +12,9 @@ const createGameState = async (gameStateBody) => {
 };
 
 /**
- * Query for game states
- * @param {Object} filter - MongoDB filter
- * @param {Object} options - Query options (pagination, sorting)
+ * Lấy danh sách GameState có phân trang
+ * @param {Object} filter - Bộ lọc tìm kiếm
+ * @param {Object} options - Phân trang (limit, page, sort)
  * @returns {Promise<QueryResult>}
  */
 const queryGameStates = async (filter, options) => {
@@ -22,16 +22,20 @@ const queryGameStates = async (filter, options) => {
 };
 
 /**
- * Get game state by id
+ * Lấy GameState theo ID
  * @param {ObjectId} id
  * @returns {Promise<GameState>}
  */
 const getGameStateById = async (id) => {
-  return GameState.findById(id).populate('user_id npc_state tasks crises');
+  return GameState.findById(id)
+    .populate('user_id')
+    .populate('npc_state')
+    .populate('tasks')
+    .populate('crises');
 };
 
 /**
- * Update game state by id
+ * Cập nhật GameState theo ID
  * @param {ObjectId} gameStateId
  * @param {Object} updateBody
  * @returns {Promise<GameState>}
@@ -39,22 +43,23 @@ const getGameStateById = async (id) => {
 const updateGameStateById = async (gameStateId, updateBody) => {
   const gameState = await getGameStateById(gameStateId);
   if (!gameState) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Game state not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'GameState not found');
   }
+
   Object.assign(gameState, updateBody);
   await gameState.save();
   return gameState;
 };
 
 /**
- * Delete game state by id
+ * Xóa GameState theo ID
  * @param {ObjectId} gameStateId
  * @returns {Promise<GameState>}
  */
 const deleteGameStateById = async (gameStateId) => {
   const gameState = await getGameStateById(gameStateId);
   if (!gameState) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Game state not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'GameState not found');
   }
   await gameState.remove();
   return gameState;

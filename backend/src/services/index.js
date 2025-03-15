@@ -3,4 +3,7 @@ module.exports.emailService = require('./email.service');
 module.exports.tokenService = require('./token.service');
 module.exports.userService = require('./user.service');
 module.exports.crisisService = require('./crisis.service');
+module.exports.crisisStateService = require('./crisisState.service');
 module.exports.gameStateService = require('./gameState.service');
+module.exports.npcService = require('./npc.service');
+module.exports.npcStateService = require('./npcState.service');
