@@ -1,8 +1,79 @@
 "use client"
 
+
 import { Background } from "@/components/ui/background";
+import { API_BASE_URL, sleep } from "@/lib/constants";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 export default function AuthPage() {
+  const router = useRouter();
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [registerData, setRegisterData] = useState({ name: "", email: "", password: "" });
+
+  const handleLogin = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${API_BASE_URL}/v1/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData),
+      });
+      const result = await response.json();
+
+      const { user, tokens } = result;
+
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("accessToken", tokens?.access?.token);
+      localStorage.setItem("refreshToken", tokens?.refresh?.token);
+
+      Cookies.set("accessToken", tokens?.access?.token, {
+        expires: new Date(tokens?.access?.expires),
+        secure: true,
+        sameSite: "Strict",
+      });
+
+      Cookies.set("refreshToken", tokens?.refresh?.token, {
+        expires: new Date(tokens?.refresh?.expires),
+        secure: true,
+        sameSite: "Strict",
+      });
+
+      if (response.ok) {
+        toast.success("Login successfully");
+        router.push("/");
+      } else {
+        toast.error(result.message || "Login failed");
+      }
+    } catch (error) {
+      toast.error("Login error");
+    }
+  };
+
+  const handleRegister = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${API_BASE_URL}/v1/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(registerData),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        toast.success("Registration successfully");
+        await sleep(1500);
+        window.location.reload();
+      } else {
+        toast.error(result.message || "Registration failed");
+      }
+    } catch (error) {
+      toast.error("Registration failed");
+    }
+  };
+
+
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4">
       {/* Custom Background */}
@@ -36,13 +107,15 @@ export default function AuthPage() {
             <div className="text-center">
               <h2 className="text-3xl font-bold tracking-tight text-pink-700">LOG IN</h2>
             </div>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleLogin}>
               <div className="space-y-2">
                 <label htmlFor="loginEmail" className="text-sm font-medium">
                   Email
                 </label>
                 <input
                   id="loginEmail"
+                  value={loginData.email}
+                  onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                   type="email"
                   required
                   className="flex h-10 w-full rounded-full border border-pink-200 bg-pink-100/50 px-3 py-2 text-sm focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
@@ -55,6 +128,8 @@ export default function AuthPage() {
                 <input
                   id="loginPassword"
                   type="password"
+                  value={loginData.password}
+                  onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                   required
                   className="flex h-10 w-full rounded-full border border-pink-200 bg-pink-100/50 px-3 py-2 text-sm focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
                 />
@@ -73,13 +148,15 @@ export default function AuthPage() {
             <div className="text-center">
               <h2 className="text-3xl font-bold tracking-tight text-pink-700">SIGN UP</h2>
             </div>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleRegister}>
               <div className="space-y-2">
                 <label htmlFor="signupEmail" className="text-sm font-medium">
                   Email
                 </label>
                 <input
                   id="signupEmail"
+                  value={registerData.email}
+                  onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
                   type="email"
                   required
                   className="flex h-10 w-full rounded-full border border-pink-200 bg-pink-100/50 px-3 py-2 text-sm focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
@@ -91,6 +168,8 @@ export default function AuthPage() {
                 </label>
                 <input
                   id="signupPassword"
+                  value={registerData.password}
+                  onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
                   type="password"
                   required
                   className="flex h-10 w-full rounded-full border border-pink-200 bg-pink-100/50 px-3 py-2 text-sm focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
@@ -102,6 +181,8 @@ export default function AuthPage() {
                 </label>
                 <input
                   id="signupName"
+                  value={registerData.name}
+                  onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
                   type="text"
                   required
                   className="flex h-10 w-full rounded-full border border-pink-200 bg-pink-100/50 px-3 py-2 text-sm focus:border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-200"

@@ -6,19 +6,6 @@ const crisisController = require('../../controllers/crisis.controller');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .post(auth('manageCrises'), validate(crisisValidation.createCrisis), crisisController.createCrisis)
-  .get(auth('getCrises'), validate(crisisValidation.getCrises), crisisController.getCrises);
-
-router
-  .route('/:crisisId')
-  .get(auth('getCrises'), validate(crisisValidation.getCrisis), crisisController.getCrisis)
-  .patch(auth('manageCrises'), validate(crisisValidation.updateCrisis), crisisController.updateCrisis)
-  .delete(auth('manageCrises'), validate(crisisValidation.deleteCrisis), crisisController.deleteCrisis);
-
-module.exports = router;
-
 /**
  * @swagger
  * tags:
@@ -42,40 +29,33 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - id
  *               - name
  *               - description
+ *               - role_needed
  *               - effect
- *               - activation_condition
+ *               - resolution
  *             properties:
- *               id:
- *                 type: string
  *               name:
  *                 type: string
  *               description:
+ *                 type: string
+ *               role_needed:
  *                 type: string
  *               effect:
  *                 type: array
  *                 items:
  *                   type: number
- *                 description: Must have exactly 6 numbers
- *               activation_condition:
+ *               resolution:
  *                 type: string
  *             example:
- *               id: "crisis_001"
- *               name: "Economic Collapse"
- *               description: "A severe economic downturn"
- *               effect: [10, 20, -5, -10, 15, -30]
- *               activation_condition: "GDP falls by 10%"
+ *               name: "Cybersecurity Breach"
+ *               description: "A critical cybersecurity threat detected."
+ *               role_needed: "Security Analyst"
+ *               effect: [5, 3, -2]
+ *               resolution: "Implement firewall patch"
  *     responses:
  *       "201":
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/Crisis'
- *       "400":
- *         $ref: '#/components/responses/BadRequest'
+ *         description: Crisis created successfully
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -83,108 +63,54 @@ module.exports = router;
  *
  *   get:
  *     summary: Get all crises
- *     description: Users can retrieve all crises.
+ *     description: Fetch all available crisis records.
  *     tags: [Crises]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: name
- *         schema:
- *           type: string
- *         description: Crisis name
- *       - in: query
- *         name: sortBy
- *         schema:
- *           type: string
- *         description: Sort by field (ex. name:asc)
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *           minimum: 1
- *         default: 10
- *         description: Maximum number of crises per page
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *           minimum: 1
- *           default: 1
- *         description: Page number
  *     responses:
  *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 results:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Crisis'
- *                 page:
- *                   type: integer
- *                   example: 1
- *                 limit:
- *                   type: integer
- *                   example: 10
- *                 totalPages:
- *                   type: integer
- *                   example: 1
- *                 totalResults:
- *                   type: integer
- *                   example: 1
+ *         description: List of crises
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
  */
+router
+  .route('/')
+  .post(auth('manageCrises'), validate(crisisValidation.createCrisis), crisisController.createCrisis)
+  .get(auth('getCrises'), crisisController.getCrises);
 
 /**
  * @swagger
- * /crises/{id}:
+ * /crises/{crisisId}:
  *   get:
- *     summary: Get a crisis
- *     description: Users can fetch details of a specific crisis.
+ *     summary: Get a crisis by ID
+ *     description: Retrieve details of a crisis.
  *     tags: [Crises]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: crisisId
  *         required: true
  *         schema:
  *           type: string
- *         description: Crisis ID
  *     responses:
  *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/Crisis'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
+ *         description: Crisis details retrieved successfully
  *       "404":
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
  *     summary: Update a crisis
- *     description: Only admins can update crises.
+ *     description: Modify crisis details.
  *     tags: [Crises]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: crisisId
  *         required: true
  *         schema:
  *           type: string
- *         description: Crisis ID
  *     requestBody:
  *       required: true
  *       content:
@@ -196,54 +122,42 @@ module.exports = router;
  *                 type: string
  *               description:
  *                 type: string
+ *               role_needed:
+ *                 type: string
  *               effect:
  *                 type: array
  *                 items:
  *                   type: number
- *                 description: Must have exactly 6 numbers
- *               activation_condition:
+ *               resolution:
  *                 type: string
- *             example:
- *               name: "Economic Recession"
- *               description: "A less severe economic downturn"
- *               effect: [5, 10, -2, -5, 7, -15]
- *               activation_condition: "GDP falls by 5%"
  *     responses:
  *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *                $ref: '#/components/schemas/Crisis'
- *       "400":
- *         $ref: '#/components/responses/BadRequest'
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
+ *         description: Crisis updated successfully
  *       "404":
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
  *     summary: Delete a crisis
- *     description: Only admins can delete crises.
+ *     description: Remove a crisis from the database.
  *     tags: [Crises]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: crisisId
  *         required: true
  *         schema:
  *           type: string
- *         description: Crisis ID
  *     responses:
  *       "204":
- *         description: No content
- *       "401":
- *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
+ *         description: Crisis deleted successfully
  *       "404":
  *         $ref: '#/components/responses/NotFound'
  */
+router
+  .route('/:crisisId')
+  .get(auth('getCrises'), validate(crisisValidation.getCrisis), crisisController.getCrisis)
+  .patch(auth('manageCrises'), validate(crisisValidation.updateCrisis), crisisController.updateCrisis)
+  .delete(auth('manageCrises'), validate(crisisValidation.deleteCrisis), crisisController.deleteCrisis);
+
+module.exports = router;
