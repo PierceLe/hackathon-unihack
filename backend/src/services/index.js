@@ -6,3 +6,4 @@ module.exports.crisisService = require('./crisis.service');
 module.exports.crisisStateService = require('./crisisState.service');
 module.exports.gameStateService = require('./gameState.service');
 module.exports.npcService = require('./npc.service');
+module.exports.npcStateService = require('./npcState.service');
