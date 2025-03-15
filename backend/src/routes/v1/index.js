@@ -1,8 +1,9 @@
 const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
-const crisisRoute = require('./crisis.route'); // Import Crisis Route
+const crisisRoute = require('./crisis.route');
 const crisisStateRoute = require('./crisisState.route');
+const gameStateRoute = require('./gameState.route'); // Thêm GameState route
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -22,8 +23,12 @@ const defaultRoutes = [
     route: crisisRoute,
   },
   {
-    path: '/crisesState',
+    path: '/crisis-states', // Sửa lại theo đúng format
     route: crisisStateRoute,
+  },
+  {
+    path: '/game-states', // Thêm GameState route
+    route: gameStateRoute,
   },
 ];
 
