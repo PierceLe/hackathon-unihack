@@ -138,15 +138,15 @@ html, body {
 /* styles/globals.css */
 :root {
   --primary-color: #582751;
-  --secondary-color: #3a4b69;
+  --secondary-color: #843b78;
   --accent-color: #ff6347;
 }
 
 .text-primary {
   color: var(--primary-color);
-  font-size: 40px;
+  font-size: 46px;
   font-family: var(--primary-font);
-  font-family: 'Montserrat';
+  font-family: 'Avenir Next', sans-serif;
   font-style: normal;
   font-weight: 700;
   line-height: 78px;
@@ -155,6 +155,7 @@ html, body {
 
 .text-secondary {
   color: var(--secondary-color);
+  font-family: "Impact", sans-serif;
 }
 
 .text-accent {
@@ -169,6 +170,62 @@ html, body {
 }
 
 
+/* styles/globals.css or styles/ChatBox.module.css */
 
+.chatbox-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+.chat-messages {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding-right: 5px;
+}
 
+.message {
+  margin-bottom: 15px;
+}
+
+.message-bubble {
+  padding: 10px;
+  background-color: #d1e7ff;
+  border-radius: 20px;
+  display: inline-block;
+  max-width: 70%;
+}
+
+.chat-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-field {
+  width: 80%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.send-button {
+  width: 15%;
+  padding: 8px 12px;
+  background-color: #6f40a7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.send-button:hover {
+  background-color: #5c369e;
+}
