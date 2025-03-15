@@ -104,6 +104,10 @@ const router = express.Router();
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  */
+
+router
+  .get('/me', auth('getTasks'), taskController.getMyTasks);
+
 router
   .route('/')
   .post(auth('manageTasks'), validate(taskValidation.createTask), taskController.createTask)
@@ -193,5 +197,11 @@ router
   .get(auth('getTasks'), validate(taskValidation.getTask), taskController.getTask)
   .patch(auth('manageTasks'), validate(taskValidation.updateTask), taskController.updateTask)
   .delete(auth('manageTasks'), validate(taskValidation.deleteTask), taskController.deleteTask);
+
+router
+  .post('/init', auth('getTasks'), validate(taskValidation.initManyTasks), taskController.initManyTasks);
+
+router
+  .put('/:taskId/status', auth('getTasks'), validate(taskValidation.updateTaskByStatus), taskController.updateTaskStatus);
 
 module.exports = router;

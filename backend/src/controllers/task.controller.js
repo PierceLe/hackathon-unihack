@@ -34,10 +34,41 @@ const deleteTask = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const initManyTasks = catchAsync(async (req, res) => {
+  const { user } = req;
+  const tasksCreated = await taskService.initManyTasks(req.body.tasks, user.id);
+  res.send({
+    status: httpStatus.OK,
+    tasks: tasksCreated
+  });
+});
+
+const getMyTasks = catchAsync(async (req, res) => {
+  const { user } = req;
+  const tasks = await taskService.getMyTasks(user.id);
+  res.send({
+    status: httpStatus.OK,
+    tasks
+  });
+});
+
+const updateTaskStatus = catchAsync(async (req, res) => {
+  const { taskId } = req.params;
+  const { status } = req.body;
+  await taskService.updateTaskByStatus(taskId, status);
+  res.send({
+    status: httpStatus.OK,
+    message: 'Task status updated'
+  });
+});
+
 module.exports = {
   createTask,
   getTasks,
   getTask,
   updateTask,
   deleteTask,
+  getMyTasks,
+  updateTaskStatus,
+  initManyTasks
 };
