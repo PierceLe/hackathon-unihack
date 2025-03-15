@@ -7,6 +7,7 @@ import PinkButton from "@/components/ui/setting";
 import { useSearchParams } from "next/navigation";
 import { teamMembers } from "@/data/team-member";
 import { SelectedMember } from "@/types";
+import { AI_API_URL } from "@/lib/constants";
 
 type Message = {
   id: string;
@@ -14,71 +15,82 @@ type Message = {
   text: string;
   isUser: boolean;
   avatar: string;
+  isTyping?: boolean; // Thêm thuộc tính để theo dõi trạng thái gõ
 };
+
+async function fetchBotResponse(
+  modelId: string,
+  ques: string
+): Promise<string> {
+  try {
+    const response = await fetch(`${AI_API_URL}/chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        modelId,
+        ques,
+      }),
+    });
+
+    const data = await response.json();
+    if (data.status === "success") {
+      return data.response;
+    }
+    return "Sorry, I couldn't process that request.";
+  } catch (error) {
+    console.error("Error fetching bot response:", error);
+    return "Oops! Something went wrong.";
+  }
+}
 
 export default function ChatPage() {
   const searchParams = useSearchParams();
-  const selected = searchParams.get("selected"); // Lấy chuỗi "1,2,3,4,5"
+  const selected = searchParams.get("selected");
   const [selectedMembers, setSelectedMembers] = useState<SelectedMember[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Lấy danh sách thành viên đã chọn
+  // Get selected team members
   useEffect(() => {
     if (selected) {
       const selectedIds = selected.split(",");
       const members = teamMembers.filter((m) => selectedIds.includes(m.id));
       setSelectedMembers(members);
-
-      // Khởi tạo 5 tin nhắn chào từ bot và 1 tin nhắn từ người dùng
-      const initialMessages: Message[] = members.map((member, index) => ({
-        id: `bot-${index}-${Date.now()}`,
-        sender: member.name,
-        text: `Hi! I'm ${member.name}, your ${member.position}. Ready to assist you!`,
-        isUser: false,
-        avatar: member.avatarUrl || "/placeholder.svg?height=40&width=40",
-      }));
-
-      initialMessages.push({
-        id: `user-${Date.now()}`,
-        sender: "You",
-        text: "Hello everyone! Looking forward to working with you.",
-        isUser: true,
-        avatar: "/placeholder.svg?height=40&width=40",
-      });
-
-      setMessages(initialMessages);
     }
   }, [selected]);
 
-  // Tự động thêm tin nhắn ngẫu nhiên mỗi 1 giây
-  useEffect(() => {
-    if (selectedMembers.length === 0) return;
-
-    const interval = setInterval(() => {
-      const randomMember =
-        selectedMembers[Math.floor(Math.random() * selectedMembers.length)];
-      const randomMessage: Message = {
-        id: `random-${Date.now()}`,
-        sender: randomMember.name,
-        text: `Hey, just chiming in! I'm ${randomMember.name}, your ${randomMember.position}.`,
-        isUser: false,
-        avatar: randomMember.avatarUrl || "/placeholder.svg?height=40&width=40",
-      };
-      setMessages((prev) => [...prev, randomMessage]);
-    }, 1000);
-
-    // Dọn dẹp interval khi component unmount
-    return () => clearInterval(interval);
-  }, [selectedMembers]);
-
-  // Tự động cuộn xuống cuối khi có tin nhắn mới
+  // Auto-scroll to bottom when new messages appear
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSendMessage = () => {
+  const typeMessage = (message: Message, fullText: string) => {
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      if (currentIndex < fullText.length) {
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === message.id
+              ? { ...msg, text: fullText.slice(0, currentIndex + 1) }
+              : msg
+          )
+        );
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === message.id ? { ...msg, isTyping: false } : msg
+          )
+        );
+      }
+    }, 35); // Điều chỉnh tốc độ gõ (50ms mỗi ký tự)
+  };
+
+  const handleSendMessage = async () => {
     if (newMessage.trim() === "") return;
 
     const userMessage: Message = {
@@ -89,36 +101,37 @@ export default function ChatPage() {
       avatar: "/placeholder.svg?height=40&width=40",
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setNewMessage("");
 
-    setTimeout(() => {
-      const randomMember =
-        selectedMembers[Math.floor(Math.random() * selectedMembers.length)];
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: randomMember?.name || "AI",
-        text: `Hi! I'm ${randomMember?.name || "AI"}, your ${
-          randomMember?.position || "assistant"
-        }. How can I assist you with: "${userMessage.text}"?`,
+    // Send request to all 5 selected bots
+    const botPromises = selectedMembers.slice(0, 5).map(async (member) => {
+      const responseText = await fetchBotResponse(member.modelId, newMessage);
+      const botMessage: Message = {
+        id: `${member.id}-${Date.now()}`,
+        sender: member.name,
+        text: "",
         isUser: false,
-        avatar:
-          randomMember?.avatarUrl || "/placeholder.svg?height=40&width=40",
+        avatar: member.avatarUrl || "/placeholder.svg?height=40&width=40",
+        isTyping: true,
       };
-      setMessages((prev) => [...prev, aiResponse]);
-    }, 1000);
+
+      // Thêm message với text rỗng trước
+      setMessages((prev) => [...prev, botMessage]);
+      // Bắt đầu hiệu ứng gõ
+      typeMessage(botMessage, responseText);
+
+      return botMessage;
+    });
   };
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-br from-pink-100 to-blue-100">
       {/* Header */}
       <header className="relative flex p-4 border-b">
-        {/* Left button */}
         <div className="z-10">
           <PinkButton imageSrc="/settings.png" />
         </div>
-
-        {/* Centered title */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-full">
           <h1 className="text-4xl font-anton font-bold text-secondary tracking-wider">
             FINDING THE IDEA
@@ -135,6 +148,7 @@ export default function ChatPage() {
             text={message.text}
             isUser={message.isUser}
             avatar={message.avatar}
+            // isTyping={message.isTyping} // Truyền thêm prop để component ChatMessage có thể hiển thị hiệu ứng nếu cần
           />
         ))}
         <div ref={messagesEndRef} />

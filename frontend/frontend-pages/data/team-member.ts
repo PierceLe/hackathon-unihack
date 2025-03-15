@@ -8,7 +8,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Database wizard",
     avatarUrl: "/placeholder.svg?height=100&width=100",
     accentColor: "bg-emerald-600",
-    modelId: "1",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BBDbTaUM",
   },
   {
     id: "2",
@@ -17,7 +17,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Savant",
     avatarUrl: "/placeholder.svg?height=100&width=100",
     accentColor: "bg-amber-400",
-    modelId: "2",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BArXhTHk",
   },
   {
     id: "3",
@@ -26,7 +26,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Full stack",
     avatarUrl: "/placeholder.svg?height=100&width=100",
     accentColor: "bg-rose-300",
-    modelId: "3",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BArXhTHk",
   },
   {
     id: "4",
@@ -35,7 +35,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Chill guy",
     avatarUrl: "/placeholder.svg?height=100&width=100",
     accentColor: "bg-blue-700",
-    modelId: "4",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BBDbTaUM",
   },
   {
     id: "5",
@@ -44,7 +44,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Happy-go-lucky",
     avatarUrl: "/placeholder.svg?height=100&width=100",
     accentColor: "bg-orange-700",
-    modelId: "5",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BArXhTHk",
   },
   {
     id: "6",
@@ -53,7 +53,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "All-rounder",
     avatarUrl: "/placeholder.svg?height=100&width=100",
     accentColor: "bg-red-600",
-    modelId: "6",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BBDbTaUM",
   },
   {
     id: "7",
@@ -62,7 +62,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Hard-working",
     avatarUrl: "/placeholder.svg?height=100&width=100",
     accentColor: "bg-teal-400",
-    modelId: "7",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BArXhTHk",
   },
   {
     id: "8",
@@ -71,6 +71,6 @@ export const teamMembers: TeamMember[] = [
     advantage: "Artist",
     avatarUrl: "/placeholder.svg?height=100&width=100",
     accentColor: "bg-purple-400",
-    modelId: "8",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BBDbTaUM",
   },
 ];

@@ -14,4 +14,5 @@ export type SelectedMember = {
   id: string;
   name: string;
   avatarUrl: string;
+  modelId: string;
 };
