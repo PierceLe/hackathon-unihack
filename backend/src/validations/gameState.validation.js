@@ -3,14 +3,14 @@ const { objectId } = require('./custom.validation');
 
 const createGameState = {
   body: Joi.object().keys({
-    id: Joi.string().required(),
     user_id: Joi.string().custom(objectId).required(),
     npc_state: Joi.array().items(Joi.string().custom(objectId)),
     stage: Joi.number().required(),
     tasks: Joi.array().items(Joi.string().custom(objectId)),
-    chat_log: Joi.string().required(),
+    chat_log: Joi.string().allow(''),
     crises: Joi.array().items(Joi.string().custom(objectId)),
     judge_score: Joi.number().required(),
+    turn_before_next_stage: Joi.number().required(),
   }),
 };
 
@@ -36,12 +36,13 @@ const updateGameState = {
   }),
   body: Joi.object()
     .keys({
-      stage: Joi.number(),
-      chat_log: Joi.string(),
-      judge_score: Joi.number(),
       npc_state: Joi.array().items(Joi.string().custom(objectId)),
+      stage: Joi.number(),
       tasks: Joi.array().items(Joi.string().custom(objectId)),
+      chat_log: Joi.string().allow(''),
       crises: Joi.array().items(Joi.string().custom(objectId)),
+      judge_score: Joi.number(),
+      turn_before_next_stage: Joi.number(),
     })
     .min(1),
 };

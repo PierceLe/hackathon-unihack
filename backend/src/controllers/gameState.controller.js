@@ -19,7 +19,7 @@ const getGameStates = catchAsync(async (req, res) => {
 const getGameState = catchAsync(async (req, res) => {
   const gameState = await gameStateService.getGameStateById(req.params.gameStateId);
   if (!gameState) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Game state not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'GameState not found');
   }
   res.send(gameState);
 });
