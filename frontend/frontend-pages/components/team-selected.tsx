@@ -36,6 +36,7 @@ export default function TeamSelector() {
           name: currentMember.name,
           avatarUrl: currentMember.avatarUrl,
           position: currentMember.position,
+          modelId: currentMember.modelId,
         },
       ]);
     }
@@ -46,11 +47,13 @@ export default function TeamSelector() {
       const memberIds = selectedMembers.map((m) => m.id).join(",");
       router.push(`/chat?selected=${memberIds}`);
     }
-  }
+  };
 
   const handleBack = () => {
     // Remove the last selected member
-    setSelectedMembers((prevSelectedMembers) => prevSelectedMembers.slice(0, -1));
+    setSelectedMembers((prevSelectedMembers) =>
+      prevSelectedMembers.slice(0, -1)
+    );
   };
 
   return (
@@ -65,8 +68,16 @@ export default function TeamSelector() {
         </button>
 
         <Card className="w-[400px] h-[250px] relative overflow-hidden">
-          <div className="absolute inset-0 left-0 w-full h-[94px]" style={{ backgroundColor: currentMember.color }} />
-          <div className={cn("absolute top-0 w-full h-24", currentMember.accentColor)} />
+          <div
+            className="absolute inset-0 left-0 w-full h-[94px]"
+            style={{ backgroundColor: currentMember.color }}
+          />
+          <div
+            className={cn(
+              "absolute top-0 w-full h-24",
+              currentMember.accentColor
+            )}
+          />
           <div className="relative h-full flex flex-col items-center pt-2">
             <Avatar className="w-24 h-24 border-4 border-white">
               <AvatarImage src={currentMember.avatarUrl} />
@@ -95,13 +106,15 @@ export default function TeamSelector() {
         <Button
           className="rounded-full px-12 py-6 text-xl bg-pink-200 hover:bg-pink-300 text-purple-800"
           onClick={handleInvite}
-          disabled={selectedMembers.length >= 5 || selectedMembers.some((m) => m.id === currentMember.id)}
+          disabled={
+            selectedMembers.length >= 5 ||
+            selectedMembers.some((m) => m.id === currentMember.id)
+          }
         >
           Invite
         </Button>
       </div>
 
-      
       {/* Bottom Section */}
       <div className="w-full flex justify-between items-center px-8 mt-8">
         <div className="flex gap-4">
@@ -121,12 +134,12 @@ export default function TeamSelector() {
         </div>
 
         <Button
-            className="rounded-full px-12 py-6 text-xl bg-pink-200 hover:bg-pink-300 text-purple-800"
-            onClick={handleBack}
-            disabled={selectedMembers.length === 0}
-          >
-            Back
-          </Button>
+          className="rounded-full px-12 py-6 text-xl bg-pink-200 hover:bg-pink-300 text-purple-800"
+          onClick={handleBack}
+          disabled={selectedMembers.length === 0}
+        >
+          Back
+        </Button>
         <Button
           className="rounded-full px-12 py-6 text-xl bg-pink-200 hover:bg-pink-300 text-purple-800"
           onClick={handleLockIn}
@@ -134,7 +147,6 @@ export default function TeamSelector() {
         >
           Lock in
         </Button>
-        
       </div>
     </div>
   );
