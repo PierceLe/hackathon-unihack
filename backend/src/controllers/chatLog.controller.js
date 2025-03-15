@@ -5,12 +5,14 @@ const catchAsync = require('../utils/catchAsync');
 const { chatLogService } = require('../services');
 
 const createChatLog = catchAsync(async (req, res) => {
-  const chatLog = await chatLogService.createChatLog(req.body);
+  const userId = req.user.id;
+  const chatLog = await chatLogService.createChatLog(req.body, userId);
   res.status(httpStatus.CREATED).send(chatLog);
 });
 
 const createManyChatLogs = catchAsync(async (req, res) => {
-  const chatLogs = await chatLogService.createManyChatLogs(req.body.chatLogs);
+  const userId = req.user.id;
+  const chatLogs = await chatLogService.createManyChatLogs(req.body.chatLogs, userId);
   res.status(httpStatus.CREATED).send(chatLogs);
 });
 
@@ -41,7 +43,10 @@ const deleteChatLog = catchAsync(async (req, res) => {
 const getMyChatLogs = catchAsync(async (req, res) => {
   const userId = req.user.id; // Lấy user_id từ token authentication
   const result = await chatLogService.getChatLogsByUserId(userId);
-  res.send(result);
+  res.send({
+    status: httpStatus.OK,
+    data: result
+  });
 });
 
 /**

@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send } from "lucide-react";
+import { Send, Trash2 } from "lucide-react";
 import ChatMessage from "@/components/ui/chatbox";
 import PinkButton from "@/components/ui/setting";
 import { useSearchParams } from "next/navigation";
 import { teamMembers } from "@/data/team-member";
 import { SelectedMember } from "@/types";
-import { AI_API_URL } from "@/lib/constants";
+import { API_BASE_URL, AI_API_URL } from "@/lib/constants";
+import { toast } from "react-hot-toast";
 
 type Message = {
   id: string;
@@ -17,6 +18,43 @@ type Message = {
   avatar: string;
   isTyping?: boolean; // Thêm thuộc tính để theo dõi trạng thái gõ
 };
+
+const getAccessToken = (): string | null => {
+  const cookies = document.cookie.split(";");
+  const tokenCookie = cookies.find((cookie) =>
+    cookie.trim().startsWith("accessToken=")
+  );
+  return tokenCookie ? tokenCookie.split("=")[1] : null;
+};
+
+async function saveChatLogs(
+  chatLogs: { model_id?: string; message_content: string }[]
+) {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    console.error("No access token found");
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/v1/chat-logs/bulk`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        chatLogs,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to save chat logs");
+    }
+  } catch (error) {
+    console.error("Error saving chat logs:", error);
+  }
+}
 
 async function fetchBotResponse(
   modelId: string,
@@ -45,6 +83,59 @@ async function fetchBotResponse(
   }
 }
 
+async function fetchChatHistory() {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    console.error("No access token found");
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/v1/chat-logs/my`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) throw new Error("Failed to fetch chat history");
+    const data = await response.json();
+    return data.data || [];
+  } catch (error) {
+    console.error("Error fetching chat history:", error);
+    return [];
+  }
+}
+
+async function deleteChatHistory() {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    console.error("No access token found");
+    return false;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/v1/chat-logs/my`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (response.ok) {
+      toast.success("Delete chat history successfully");
+    } else {
+      toast.error("Failed to delete chat history");
+    }
+    return true;
+  } catch (error) {
+    console.error("Error deleting chat history:", error);
+    return false;
+  }
+}
+
 export default function ChatPage() {
   const searchParams = useSearchParams();
   const selected = searchParams.get("selected");
@@ -52,6 +143,48 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const loadInitialData = async () => {
+      if (selected) {
+        const selectedIds = selected.split(",");
+        const members = teamMembers.filter((m) => selectedIds.includes(m.id));
+        setSelectedMembers(members);
+      }
+
+      const history = await fetchChatHistory();
+      const mappedMessages = history.map((log: any) => {
+        if (log.model_id) {
+          const bot = teamMembers.find((m) => m.id === log.model_id);
+          return {
+            id: log.id,
+            sender: bot?.name || "Unknown Bot",
+            text: log.message_content,
+            isUser: false,
+            avatar: bot?.avatarUrl || "/placeholder.svg?height=40&width=40",
+            createdAt: log?.timestamp,
+          };
+        }
+        return {
+          id: log.id,
+          sender: "You",
+          text: log.message_content,
+          isUser: true,
+          avatar: "/placeholder.svg?height=40&width=40",
+          createdAt: log?.timestamp,
+        };
+      });
+      console.log(mappedMessages);
+      setMessages(
+        mappedMessages?.sort(
+          (a: { createdAt: Date }, b: { createdAt: Date }) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        )
+      );
+    };
+
+    loadInitialData();
+  }, [selected]);
 
   // Get selected team members
   useEffect(() => {
@@ -102,8 +235,11 @@ export default function ChatPage() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+
+    await saveChatLogs([{ message_content: newMessage }]);
     setNewMessage("");
 
+    const botResponses: { model_id: string; message_content: string }[] = [];
     // Send request to all 5 selected bots
     const botPromises = selectedMembers.slice(0, 5).map(async (member) => {
       const responseText = await fetchBotResponse(member.modelId, newMessage);
@@ -121,8 +257,26 @@ export default function ChatPage() {
       // Bắt đầu hiệu ứng gõ
       typeMessage(botMessage, responseText);
 
+      botResponses.push({
+        model_id: member.id,
+        message_content: responseText,
+      });
+
       return botMessage;
     });
+
+    Promise.all(botPromises).then(async () => {
+      if (botResponses.length > 0) {
+        await saveChatLogs(botResponses);
+      }
+    });
+  };
+
+  const handleDeleteHistory = async () => {
+    const success = await deleteChatHistory();
+    if (success) {
+      setMessages([]); // Xóa toàn bộ messages trên UI
+    }
   };
 
   return (
@@ -153,7 +307,15 @@ export default function ChatPage() {
         ))}
         <div ref={messagesEndRef} />
       </div>
-
+      <div className="flex justify-end p-4">
+        <button
+          onClick={handleDeleteHistory}
+          className="ml-auto p-2 text-red-600 hover:text-red-800 transition-colors"
+          title="Delete chat history"
+        >
+          <Trash2 size={24} />
+        </button>
+      </div>
       {/* Message input */}
       <div className="p-4">
         <div className="flex items-center bg-yellow-100 rounded-full shadow-md">
