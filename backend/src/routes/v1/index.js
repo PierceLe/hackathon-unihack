@@ -1,6 +1,7 @@
 const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
+const crisisRoute = require('./crisis.route'); // Import Crisis Route
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -15,10 +16,13 @@ const defaultRoutes = [
     path: '/users',
     route: userRoute,
   },
+  {
+    path: '/crises', // Thêm route cho Crisis
+    route: crisisRoute,
+  },
 ];
 
 const devRoutes = [
-  // routes available only in development mode
   {
     path: '/docs',
     route: docsRoute,
@@ -29,7 +33,6 @@ defaultRoutes.forEach((route) => {
   router.use(route.path, route.route);
 });
 
-/* istanbul ignore next */
 if (config.env === 'development') {
   devRoutes.forEach((route) => {
     router.use(route.path, route.route);
