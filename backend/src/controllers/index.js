@@ -7,3 +7,4 @@ module.exports.npc = require('./npc.controller');
 module.exports.npcState = require('./npcState.controller');
 module.exports.task = require('./task.controller');
 module.exports.taskState = require('./taskState.controller');
+module.exports.trait = require('./trait.controller');
