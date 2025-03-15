@@ -4,6 +4,7 @@ const { toJSON, paginate } = require('./plugins');
 const chatLogSchema = mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   npc_id: { type: mongoose.Schema.Types.ObjectId, ref: 'NPC', required: false },
+  model_id: { type: String, required: false },
   message_content: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
 });

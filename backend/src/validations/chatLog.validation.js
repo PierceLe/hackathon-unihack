@@ -5,6 +5,7 @@ const createChatLog = {
   body: Joi.object().keys({
     user_id: Joi.string().custom(objectId).required(),
     npc_id: Joi.string().custom(objectId).optional(),
+    model_id: Joi.string().optional(),
     message_content: Joi.string().required(),
   }),
 };
@@ -15,19 +16,10 @@ const createManyChatLogs = {
       Joi.object().keys({
         user_id: Joi.string().custom(objectId).required(),
         npc_id: Joi.string().custom(objectId).optional(),
+        model_id: Joi.string().optional(),
         message_content: Joi.string().required(),
       })
     ).min(1),
-  }),
-};
-
-const getChatLogs = {
-  query: Joi.object().keys({
-    user_id: Joi.string().custom(objectId),
-    npc_id: Joi.string().custom(objectId),
-    sortBy: Joi.string(),
-    limit: Joi.number().integer(),
-    page: Joi.number().integer(),
   }),
 };
 
@@ -46,7 +38,6 @@ const deleteChatLog = {
 module.exports = {
   createChatLog,
   createManyChatLogs,
-  getChatLogs,
   getChatLog,
   deleteChatLog,
 };

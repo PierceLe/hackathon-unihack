@@ -22,6 +22,40 @@ router
   .route('/bulk')
   .post(auth('manageChatLogs'), validate(chatLogValidation.createManyChatLogs), chatLogController.createManyChatLogs);
 
+/**
+ * @swagger
+ * /chat-logs/my:
+ *   get:
+ *     summary: Get my chat logs
+ *     description: Retrieve a list of chat logs for the authenticated user.
+ *     tags: [ChatLogs]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       "200":
+ *         description: List of chat logs retrieved successfully
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ */
+router.route('/my').get(auth('getChatLogs'), chatLogController.getMyChatLogs);
+
+/**
+ * @swagger
+ * /chat-logs/my:
+ *   delete:
+ *     summary: Delete all my chat logs
+ *     description: Delete all chat logs associated with the authenticated user.
+ *     tags: [ChatLogs]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       "204":
+ *         description: Chat logs deleted successfully
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ */
+router.route('/my').delete(auth('manageChatLogs'), chatLogController.deleteMyChatLogs);
+
 router
   .route('/:chatLogId')
   .get(auth('getChatLogs'), validate(chatLogValidation.getChatLog), chatLogController.getChatLog)

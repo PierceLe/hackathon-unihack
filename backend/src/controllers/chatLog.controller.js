@@ -34,10 +34,31 @@ const deleteChatLog = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+
+/**
+ * Lấy danh sách chatlog của chính người dùng, sorted theo timestamp
+ */
+const getMyChatLogs = catchAsync(async (req, res) => {
+  const userId = req.user.id; // Lấy user_id từ token authentication
+  const result = await chatLogService.getChatLogsByUserId(userId);
+  res.send(result);
+});
+
+/**
+ * Xóa tất cả chatlog của người dùng hiện tại
+ */
+const deleteMyChatLogs = catchAsync(async (req, res) => {
+  const userId = req.user.id; // Lấy user_id từ token authentication
+  await chatLogService.deleteChatLogsByUserId(userId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
 module.exports = {
   createChatLog,
   createManyChatLogs,
   getChatLogs,
   getChatLog,
   deleteChatLog,
+  getMyChatLogs,
+  deleteMyChatLogs,
 };

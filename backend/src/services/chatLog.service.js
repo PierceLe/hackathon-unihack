@@ -53,10 +53,27 @@ const deleteChatLogById = async (chatLogId) => {
   return chatLog;
 };
 
+/**
+ * Lấy tất cả chatlogs của một user theo `user_id`, sorted theo timestamp giảm dần
+ */
+const getChatLogsByUserId = async (userId) => {
+  return ChatLog.find({ user_id: userId }).sort({ timestamp: -1 });
+};
+
+/**
+ * Xóa tất cả chatlogs của một user theo `user_id`
+ */
+const deleteChatLogsByUserId = async (userId) => {
+  await ChatLog.deleteMany({ user_id: userId });
+};
+
+
 module.exports = {
   createChatLog,
   createManyChatLogs,
   queryChatLogs,
   getChatLogById,
   deleteChatLogById,
+  getChatLogsByUserId,
+  deleteChatLogsByUserId,
 };
