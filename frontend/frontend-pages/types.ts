@@ -6,6 +6,7 @@ export type TeamMember = {
   advantage: string;
   avatarUrl: string;
   accentColor: string;
+  color: string;
 }
 
 export type SelectedMember = {

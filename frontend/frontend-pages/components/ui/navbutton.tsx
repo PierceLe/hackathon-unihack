@@ -15,7 +15,7 @@ const NavigationButtons = ({
     <div className="flex justify-center gap-16 p-6 w-full bg-transparent">
       <div className="flex flex-col items-center">
         <Button
-          className="h-16 w-16 rounded-full bg-white/80 hover:bg-white/90 shadow-md"
+          className="h-16 w-16 rounded-full bg-[#f5b3e1]/80 hover:bg-white/90 shadow-md"
           onClick={onBackClick}
         >
           <ArrowLeft className="h-8 w-8 text-purple-600" />
@@ -25,7 +25,7 @@ const NavigationButtons = ({
 
       <div className="flex flex-col items-center">
         <Button
-          className="h-16 w-16 rounded-full bg-white/80 hover:bg-white/90 shadow-md"
+          className="h-16 w-16 rounded-full bg-[#f5b3e1]/80 hover:bg-white/90 shadow-md"
           onClick={onExitClick}
         >
           <LogOut className="h-8 w-8 text-purple-600" />

@@ -6,64 +6,72 @@ export const teamMembers: TeamMember[] = [
     name: "Adrian",
     position: "Specialist",
     advantage: "Database wizard",
-    avatarUrl: "/placeholder.svg?height=100&width=100",
+    avatarUrl: "/adrian.png?height=100&width=100",
     accentColor: "bg-emerald-600",
+    color: "#399285",
   },
   {
     id: "2",
     name: "Sophia",
     position: "Specialist",
     advantage: "Savant",
-    avatarUrl: "/placeholder.svg?height=100&width=100",
+    avatarUrl: "/sophia.png?height=100&width=100",
     accentColor: "bg-amber-400",
+    color: "#C14953"
   },
   {
     id: "3",
     name: "Elena",
     position: "Backend developer",
     advantage: "Full stack",
-    avatarUrl: "/placeholder.svg?height=100&width=100",
+    avatarUrl: "/elena.png?height=100&width=100",
     accentColor: "bg-rose-300",
+    color: "#FF9B42"
   },
   {
     id: "4",
     name: "John",
     position: "Backend developer",
     advantage: "Chill guy",
-    avatarUrl: "/placeholder.svg?height=100&width=100",
+    avatarUrl: "/john.png?height=100&width=100",
     accentColor: "bg-blue-700",
+    color: "#74226C"
   },
   {
     id: "5",
     name: "Marcus",
     position: "Frontend developer",
     advantage: "Happy-go-lucky",
-    avatarUrl: "/placeholder.svg?height=100&width=100",
+    avatarUrl: "/marcus.png?height=100&width=100",
     accentColor: "bg-orange-700",
+    color: "#A44200"
   },
   {
     id: "6",
     name: "Daniel",
     position: "Pitcher",
     advantage: "All-rounder",
-    avatarUrl: "/placeholder.svg?height=100&width=100",
+    avatarUrl: "/daniel.png?height=100&width=100",
     accentColor: "bg-red-600",
+    color: "#33587D"
   },
   {
     id: "7",
     name: "Isabel",
     position: "Pitcher",
     advantage: "Hard-working",
-    avatarUrl: "/placeholder.svg?height=100&width=100",
+    avatarUrl: "/isabel.png?height=100&width=100",
     accentColor: "bg-teal-400",
+    color: "#DA392F"
   },
   {
     id: "8",
     name: "Maya",
     position: "Frontend developer",
     advantage: "Artist",
-    avatarUrl: "/placeholder.svg?height=100&width=100",
+    avatarUrl: "/maya.png?height=100&width=100",
     accentColor: "bg-purple-400",
+    color: "#5171A5"
   },
 ]
 
