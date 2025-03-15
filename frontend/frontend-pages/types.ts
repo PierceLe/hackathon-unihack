@@ -7,6 +7,7 @@ export type TeamMember = {
   avatarUrl: string;
   accentColor: string;
   modelId: string;
+  color: string;
 };
 
 export type SelectedMember = {
