@@ -1,22 +1,39 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
 
-const npcSchema = mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  model_id: { type: String, required: true },
-  name: { type: String, required: true },
-  age: { type: Number, required: true },
-  role: {
-    type: String,
-    enum: ["Backend Developer", "Frontend Developer", "Specialist", "Pitcher"],
-    required: true,
+const npcSchema = mongoose.Schema(
+  {
+    model_id: { type: String, required: true, index: true }, // Thêm index
+    name: { type: String, required: true, index: true }, // Thêm index để tìm kiếm nhanh hơn
+    age: { type: Number, required: true },
+    role: { type: String, required: true },
+    traits: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trait' }],
+    skills: [{ type: Number }],
+    max_stamina: { type: Number, required: true },
+    max_mood: { type: Number, required: true },
+    image: { type: String },
   },
-  traits: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trait' }], // References Trait model
-  skills: { type: [Number], validate: v => v.length === 4 },
-  max_stamina: { type: Number, required: true },
-  max_mood: { type: Number, required: true },
-  image: { type: String, match: /^https?:\/\// },
-});
+  {
+    timestamps: true,
+  }
+);
 
-const Npc = mongoose.model('Npc', npcSchema);
+npcSchema.plugin(toJSON);
+npcSchema.plugin(paginate);
 
-module.exports = Npc;
+/**
+ * Kiểm tra xem NPC đã tồn tại chưa theo `model_id`
+ * @param {string} modelId - ID của NPC model
+ * @param {ObjectId} [excludeNpcId] - ID cần loại trừ (nếu có)
+ * @returns {Promise<boolean>}
+ */
+npcSchema.statics.isModelIdTaken = async function (modelId, excludeNpcId) {
+  const npc = await this.findOne({ model_id: modelId, _id: { $ne: excludeNpcId } });
+  return !!npc;
+};
+
+/**
+ * @typedef NPC
+ */
+const NPC = mongoose.model('NPC', npcSchema);
+module.exports = NPC;

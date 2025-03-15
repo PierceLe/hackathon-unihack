@@ -230,3 +230,16 @@ html, body {
   background-color: #5c369e;
 }
 
+/* styles/global.css */
+.kanban-container {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 80vh; /* Giới hạn chiều cao nếu cần */
+}
+
+/* Đảm bảo cột không vượt quá container */
+.column {
+  min-width: 0; /* Ngăn cột mở rộng quá mức */
+  max-width: 100%;
+}

@@ -1,6 +1,6 @@
-import { Background } from "@/components/ui/background"
-import PinkButton from "@/components/ui/setting"
-import TeamSelector from "@/components/team-selected"
+import { Background } from "@/components/ui/background";
+import PinkButton from "@/components/ui/setting";
+import TeamSelector from "@/components/team-selected";
 
 export default function Team() {
   return (
@@ -11,7 +11,10 @@ export default function Team() {
       </div>
 
       <div className="absolute top-4 left-4 z-20">
-        <PinkButton imageSrc="/settings.png" navigateTo="/settings"></PinkButton>
+        <PinkButton
+          imageSrc="/settings.png"
+          navigateTo="/settings"
+        ></PinkButton>
       </div>
 
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-start pt-4">
@@ -25,6 +28,5 @@ export default function Team() {
         </div>
       </div>
     </main>
-  )
+  );
 }
-

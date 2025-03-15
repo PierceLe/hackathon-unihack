@@ -6,11 +6,14 @@ export type TeamMember = {
   advantage: string;
   avatarUrl: string;
   accentColor: string;
+  modelId: string;
   color: string;
-}
+};
 
 export type SelectedMember = {
-  id: string
-  name: string
-  avatarUrl: string
-}
+  position: string;
+  id: string;
+  name: string;
+  avatarUrl: string;
+  modelId: string;
+};

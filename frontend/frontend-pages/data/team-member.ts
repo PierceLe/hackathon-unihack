@@ -1,4 +1,4 @@
-import type { TeamMember } from "../types.ts"
+import type { TeamMember } from "../types.ts";
 
 export const teamMembers: TeamMember[] = [
   {
@@ -8,6 +8,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Database wizard",
     avatarUrl: "/adrian.png?height=100&width=100",
     accentColor: "bg-emerald-600",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BBDbTaUM",
     color: "#399285",
   },
   {
@@ -17,6 +18,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Savant",
     avatarUrl: "/sophia.png?height=100&width=100",
     accentColor: "bg-amber-400",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BArXhTHk",
     color: "#C14953"
   },
   {
@@ -26,6 +28,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Full stack",
     avatarUrl: "/elena.png?height=100&width=100",
     accentColor: "bg-rose-300",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BArXhTHk",
     color: "#FF9B42"
   },
   {
@@ -35,6 +38,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Chill guy",
     avatarUrl: "/john.png?height=100&width=100",
     accentColor: "bg-blue-700",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BBDbTaUM",
     color: "#74226C"
   },
   {
@@ -44,6 +48,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Happy-go-lucky",
     avatarUrl: "/marcus.png?height=100&width=100",
     accentColor: "bg-orange-700",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BArXhTHk",
     color: "#A44200"
   },
   {
@@ -53,6 +58,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "All-rounder",
     avatarUrl: "/daniel.png?height=100&width=100",
     accentColor: "bg-red-600",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BBDbTaUM",
     color: "#33587D"
   },
   {
@@ -62,6 +68,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Hard-working",
     avatarUrl: "/isabel.png?height=100&width=100",
     accentColor: "bg-teal-400",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BArXhTHk",
     color: "#DA392F"
   },
   {
@@ -71,7 +78,7 @@ export const teamMembers: TeamMember[] = [
     advantage: "Artist",
     avatarUrl: "/maya.png?height=100&width=100",
     accentColor: "bg-purple-400",
+    modelId: "ft:gpt-4o-mini-2024-07-18:personal::BBDbTaUM",
     color: "#5171A5"
   },
-]
-
+];
