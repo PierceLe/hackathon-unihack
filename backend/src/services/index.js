@@ -9,3 +9,4 @@ module.exports.npcService = require('./npc.service');
 module.exports.npcStateService = require('./npcState.service');
 module.exports.taskService = require('./task.service');
 module.exports.taskStateService = require('./taskState.service');
+module.exports.traitService = require('./trait.service');

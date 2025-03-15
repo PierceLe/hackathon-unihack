@@ -7,7 +7,8 @@ const gameStateRoute = require('./gameState.route');
 const npcRoute = require('./npc.route');
 const npcStateRoute = require('./npcState.route');
 const taskRoute = require('./task.route');
-const taskStateRoute = require('./taskState.route'); // Thêm TaskState route
+const taskStateRoute = require('./taskState.route');
+const traitRoute = require('./trait.route'); // Thêm Trait route
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -47,8 +48,12 @@ const defaultRoutes = [
     route: taskRoute,
   },
   {
-    path: '/task-states', // Thêm route cho TaskState
+    path: '/task-states',
     route: taskStateRoute,
+  },
+  {
+    path: '/traits', // Thêm route cho Trait
+    route: traitRoute,
   },
 ];
 
