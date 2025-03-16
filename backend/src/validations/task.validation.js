@@ -48,10 +48,40 @@ const deleteTask = {
   }),
 };
 
+const updateTaskByStatus = {
+  params: Joi.object().keys({
+    taskId: Joi.required().custom(objectId),
+  }),
+  body: Joi.object().keys({
+    status: Joi.string().required(),
+  })
+};
+
+const initManyTasks = {
+  body: Joi.object().keys({
+    tasks: Joi.array().items(
+      Joi.object().keys({
+        tsp: Joi.number().optional(),
+        name: Joi.string().required(),
+        type: Joi.string().optional(),
+        path: Joi.string().optional(),
+        modelId: Joi.string().optional(),
+        spLeft: Joi.number().optional(),
+        description: Joi.string().optional(),
+        spPredicted: Joi.number().optional(),
+        assignee: Joi.string().custom(objectId).optional(),
+        dependencies: Joi.array().items(Joi.string().custom(objectId)).optional(),
+      })
+    ).min(1),
+  }),
+};
+
 module.exports = {
   createTask,
   getTasks,
   getTask,
   updateTask,
   deleteTask,
+  updateTaskByStatus,
+  initManyTasks
 };

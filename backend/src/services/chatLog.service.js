@@ -7,8 +7,11 @@ const ApiError = require('../utils/ApiError');
  * @param {Object} chatLogBody
  * @returns {Promise<ChatLog>}
  */
-const createChatLog = async (chatLogBody) => {
-  return ChatLog.create(chatLogBody);
+const createChatLog = async (chatLogBody, userId) => {
+  return ChatLog.create({
+    ...chatLogBody,
+    user_id: userId,
+  });
 };
 
 /**
@@ -16,8 +19,8 @@ const createChatLog = async (chatLogBody) => {
  * @param {Array} chatLogs
  * @returns {Promise<Array<ChatLog>>}
  */
-const createManyChatLogs = async (chatLogs) => {
-  return ChatLog.insertMany(chatLogs);
+const createManyChatLogs = async (chatLogs, userId) => {
+  return ChatLog.insertMany(chatLogs.map((chatLog) => ({ ...chatLog, user_id: userId })));
 };
 
 /**

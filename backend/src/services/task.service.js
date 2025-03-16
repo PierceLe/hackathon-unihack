@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const { Task } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { update } = require('../models/task.model');
 
 /**
  * Tạo Task mới
@@ -61,10 +62,31 @@ const deleteTaskById = async (taskId) => {
   return task;
 };
 
+const initManyTasks = async (tasks, userId) => {
+  return Task.insertMany(tasks?.map((task) => ({ ...task, userId })));
+}
+
+const getMyTasks = async (userId) => {
+  return Task.find({ userId }).sort({ updatedAt: 1 });
+}
+
+const updateTaskByStatus = async (taskId, status) => {
+  const task = await Task.findById(taskId);
+  if (!task) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Task not found');
+  }
+  task.status = status;
+  await task.save();
+  return task;
+}
+
 module.exports = {
+  getMyTasks,
   createTask,
   queryTasks,
   getTaskById,
-  updateTaskById,
+  initManyTasks,
   deleteTaskById,
+  updateTaskById,
+  updateTaskByStatus
 };

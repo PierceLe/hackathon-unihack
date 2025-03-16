@@ -36,6 +36,7 @@ export default function TeamSelector() {
           name: currentMember.name,
           avatarUrl: currentMember.avatarUrl,
           position: currentMember.position,
+          modelId: currentMember.modelId,
         },
       ]);
     }
@@ -44,6 +45,7 @@ export default function TeamSelector() {
   const handleLockIn = () => {
     if (selectedMembers.length === 5) {
       const memberIds = selectedMembers.map((m) => m.id).join(",");
+      // router.push(`/chat?selected=${memberIds}`);
       router.push(`/text-page/idea?selected=${memberIds}`);
     }
   };
