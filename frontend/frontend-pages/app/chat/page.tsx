@@ -8,7 +8,9 @@ import { useSearchParams } from "next/navigation";
 import { teamMembers } from "@/data/team-member";
 import { SelectedMember } from "@/types";
 import { AI_API_URL } from "@/lib/constants";
+import { Button } from "@/components/ui/mainButton";
 
+// Define message type
 type Message = {
   id: string;
   sender: string;
@@ -137,6 +139,13 @@ export default function ChatPage() {
             FINDING THE IDEA
           </h1>
         </div>
+
+        <Button
+          className="absolute top-1/2 right-4 transform -translate-y-1/2"
+          navigateTo="/text-page/vote"
+        >
+          <div className="text-secondary text-[40px]">Let's vote!</div>
+        </Button>
       </header>
 
       {/* Chat messages container */}

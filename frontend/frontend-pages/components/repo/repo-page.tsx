@@ -1,7 +1,7 @@
 import { RepoHeader } from "@/components/repo/repo-header"
 import { RepoTabs } from "@/components/repo/repo-tabs"
 import { BranchSelector } from "@/components/repo/branch-selector"
-import { RepoStats } from "@/components/repo/repo-stats"
+
 import { Background } from "@/components/ui/background"
 
 interface RepoPageProps {
@@ -23,7 +23,7 @@ export default function RepoPage({ repoName }: RepoPageProps) {
             <div className="flex items-center gap-4">
               <BranchSelector />
             </div>
-            <RepoStats />
+
           </div>
 
           <div className="gap-8">
