@@ -21,9 +21,9 @@ export default function Home() {
             <p className="text-secondary text-[24px]">
                 Click here for Github
             </p>
-            
+
         </Button>
-        <Button navigateTo="/homepage/chatbox">
+        <Button navigateTo="/chat">
             <p className="text-secondary text-[24px]">
                 Click here for Chatbox
             </p>
