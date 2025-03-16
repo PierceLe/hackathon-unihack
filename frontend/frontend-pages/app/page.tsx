@@ -18,7 +18,7 @@ export default function Home() {
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center gap-4">
         {/* Title */}
         <h1 className="text-[84px] text-weight-[2000] leading-[145px] text-center font-impact font-bold bg-gradient-to-r from-[#213D9B] to-[#6F40A7] text-transparent bg-clip-text text-shadow-custom">
-          HACKATHON SIMULATOR
+          MANAGEHACK
         </h1>
 
         {/* Buttons Container - Using margin instead of flex gap */}
