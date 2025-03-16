@@ -32,14 +32,18 @@ const updateTask = {
   params: Joi.object().keys({
     taskId: Joi.required().custom(objectId),
   }),
-  body: Joi.object().keys({
-    name: Joi.string(),
-    description: Joi.string(),
-    type: Joi.string(),
-    dependencies: Joi.array().items(Joi.string().custom(objectId)),
-    tsp: Joi.number(),
-    path: Joi.string(),
-  }).min(1),
+  body: Joi.object()
+    .keys({
+      name: Joi.string(),
+      description: Joi.string(),
+      type: Joi.string(),
+      dependencies: Joi.array().items(Joi.string().custom(objectId)),
+      tsp: Joi.number(),
+      path: Joi.string(),
+      modelId: Joi.string().optional(),
+      assignee: Joi.string().custom(objectId).optional(),
+    })
+    .min(1),
 };
 
 const deleteTask = {
@@ -54,25 +58,27 @@ const updateTaskByStatus = {
   }),
   body: Joi.object().keys({
     status: Joi.string().required(),
-  })
+  }),
 };
 
 const initManyTasks = {
   body: Joi.object().keys({
-    tasks: Joi.array().items(
-      Joi.object().keys({
-        tsp: Joi.number().optional(),
-        name: Joi.string().required(),
-        type: Joi.string().optional(),
-        path: Joi.string().optional(),
-        modelId: Joi.string().optional(),
-        spLeft: Joi.number().optional(),
-        description: Joi.string().optional(),
-        spPredicted: Joi.number().optional(),
-        assignee: Joi.string().custom(objectId).optional(),
-        dependencies: Joi.array().items(Joi.string().custom(objectId)).optional(),
-      })
-    ).min(1),
+    tasks: Joi.array()
+      .items(
+        Joi.object().keys({
+          tsp: Joi.number().optional(),
+          name: Joi.string().required(),
+          type: Joi.string().optional(),
+          path: Joi.string().optional(),
+          modelId: Joi.string().optional(),
+          spLeft: Joi.number().optional(),
+          description: Joi.string().optional(),
+          spPredicted: Joi.number().optional(),
+          assignee: Joi.string().custom(objectId).optional(),
+          dependencies: Joi.array().items(Joi.string().custom(objectId)).optional(),
+        })
+      )
+      .min(1),
   }),
 };
 
@@ -83,5 +89,5 @@ module.exports = {
   updateTask,
   deleteTask,
   updateTaskByStatus,
-  initManyTasks
+  initManyTasks,
 };
