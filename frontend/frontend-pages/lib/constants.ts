@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = "https://hackathon-unihack.onrender.com/";
 
 export const AI_API_URL = "http://localhost:8000";
 
