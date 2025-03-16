@@ -7,9 +7,9 @@ import { teamMembers } from "@/data/team-member";
 import { SelectedMember } from "@/types";
 import { API_BASE_URL, AI_API_URL, getAccessToken } from "@/lib/constants";
 import { toast } from "react-hot-toast";
-import ChatMessage from "@/components/ui/chatbox"
-import PinkButton from "@/components/ui/setting"
-import { Button } from "@/components/ui/mainButton"
+import ChatMessage from "@/components/ui/chatbox";
+import PinkButton from "@/components/ui/setting";
+import { Button } from "@/components/ui/mainButton";
 
 type Message = {
   id: string;
@@ -286,13 +286,14 @@ export default function ChatPage() {
           <h1 className="text-4xl font-anton font-bold text-secondary tracking-wider">
             FINDING THE IDEA
           </h1>
-
         </div>
 
-        <Button className="absolute top-1/2 right-4 transform -translate-y-1/2" navigateTo="/text-page/vote">
+        <Button
+          className="absolute top-1/2 right-4 transform -translate-y-1/2"
+          navigateTo="/text-page/vote"
+        >
           <div className="text-secondary text-[40px]">Let's vote!</div>
         </Button>
-
       </header>
 
       {/* Chat messages container */}

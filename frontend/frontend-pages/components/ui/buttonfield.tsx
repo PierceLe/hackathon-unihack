@@ -9,8 +9,8 @@ export default function Vote(): JSX.Element {
         <p className="text-center text-[24px] font-semibold text-[#333]">
           You have two project options:
         </p>
-        <Button navigateTo="/chatbox">TODO LIST</Button>
-        <Button navigateTo="/chatbox">STUDENT MANAGEMENT</Button>
+        <Button navigateTo="/poker">TODO LIST</Button>
+        <Button navigateTo="/poker">STUDENT MANAGEMENT</Button>
       </div>
     </div>
   );
