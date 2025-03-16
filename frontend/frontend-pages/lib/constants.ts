@@ -1,6 +1,6 @@
 export const API_BASE_URL = 'https://hackathon-unihack.onrender.com';
 
-export const AI_API_URL = 'http://localhost:8000';
+export const AI_API_URL = 'https://hackathon-unihack-t24u.onrender.com/';
 
 export const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
