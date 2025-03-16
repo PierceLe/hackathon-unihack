@@ -11,10 +11,10 @@ import { teamMembers } from "../data/team-member";
 import { cn } from "@/lib/utils";
 
 export default function TeamSelector() {
-  const router = useRouter()
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [selectedMembers, setSelectedMembers] = useState<SelectedMember[]>([])
-  const currentMember = teamMembers[currentIndex]
+  const router = useRouter();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedMembers, setSelectedMembers] = useState<SelectedMember[]>([]);
+  const currentMember = teamMembers[currentIndex];
 
   const handlePrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? teamMembers.length - 1 : prev - 1));
@@ -46,7 +46,7 @@ export default function TeamSelector() {
     if (selectedMembers.length === 5) {
       const memberIds = selectedMembers.map((m) => m.id).join(",");
       // router.push(`/chat?selected=${memberIds}`);
-      router.push("/text-page/idea")
+      router.push(`/text-page/idea?selected=${memberIds}`);
     }
   };
 
