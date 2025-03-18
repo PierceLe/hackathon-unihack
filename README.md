@@ -37,7 +37,7 @@
 ---
 
 ## 🚧 Current Progress & Future Plans  
-For this version, we haven’t implemented all of our planned features yet, but we **hope to continue developing ManageHack in the future**. We believe this project is more than just a game—it has the potential to be a **valuable educational tool** for students to practice **teamwork, leadership, and debugging in a real-world setting.**  
+For this version,because the limit time of the hackathon (only 48 hours), we haven’t implemented all of our planned features yet, but we **hope to continue developing ManageHack in the future**. We believe this project is more than just a game—it has the potential to be a **valuable educational tool** for students to practice **teamwork, leadership, and debugging in a real-world setting.**  
 
 If you love this idea, **please support us by starring ⭐ and sharing ManageHack!** 🚀🔥  
 
